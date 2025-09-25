@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Get real help for InvoiceFlow Pro. Email support, GitHub issues, and fast replies. No bots. No tickets. Just real people.">
+  <meta name="keywords" content="invoiceflow pro support, google sheets invoice help, contact invoice automation tool, free invoice script support">
+  <title>Contact Us – Real Support for InvoiceFlow Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --success: #34a853;
+      --light: #f8fafc;
+      --dark: #0f172a;
+      --gray: #475569;
+      --border: #e2e8f0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      background: white;
+    }
+    .container { width: 90%; max-width: 700px; margin: 0 auto; }
+
+    /* Responsive Navigation */
+    .nav-container {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.4rem;
+      text-decoration: none;
+    }
+    .nav-toggle-checkbox {
+      display: none;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--primary);
+      margin: 3px 0;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    /* Mobile Menu */
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        gap: 1.25rem;
+        display: none;
+      }
+      .nav-toggle-checkbox:checked ~ .nav-links {
+        display: flex;
+      }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e6f4ff 100%);
+    }
+    .hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      color: var(--gray);
+    }
+    .contact-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      text-align: center;
+      margin: 2.5rem 0;
+    }
+    .contact-method {
+      margin: 1.5rem 0;
+      font-size: 1.1rem;
+    }
+    .email-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    .email-link:hover {
+      text-decoration: underline;
+    }
+    .response-time {
+      background: #f0fdf4;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      font-style: italic;
+      color: var(--gray);
+    }
+    .no-bots {
+      background: #fef2f2;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      border-left: 4px solid #d93025;
+    }
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background: var(--dark);
+      color: white;
+      font-size: 0.95rem;
+    }
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1.05rem; }
+      .contact-card { padding: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Responsive Navigation -->
+  <nav class="nav-container" aria-label="Main navigation">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">InvoiceFlow Pro</a>
+      
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="setup.html">Setup</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>📬 We’re Real People. We Reply.</h1>
+      <p>Got stuck? Need help? Just reach out. No bots. No ticket queues. Just real support.</p>
+      <a href="setup.html" class="btn" style="background:var(--primary); color:white; padding:14px 32px; border-radius:10px; text-decoration:none; font-weight:600; margin:0.5rem;">Go to Setup Guide</a>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="contact-card">
+      <h2 style="font-family:'Inter',sans-serif; font-size:1.8rem; margin-bottom:1.5rem;">How to Reach Us</h2>
+      
+      <div class="contact-method">
+        <strong>📧 Email Support</strong><br>
+        <a href="mailto:aqxultan.hisabkitab@gmail.com" class="email-link">aqxultan.hisabkitab@gmail.com</a>
+      </div>
+
+      <div class="contact-method">
+        <strong>🐙 GitHub Issues</strong><br>
+        <a href="https://github.com/yourname/invoiceflow-pro/issues" class="email-link">Open an Issue</a>
+      </div>
+
+      <div class="response-time">
+        ⏱️ <strong>Typical response time: within 24 hours</strong><br>
+        (Often same day!)
+      </div>
+
+      <div class="no-bots">
+        🚫 <strong>No bots. No automated replies.</strong><br>
+        Just real humans who built this tool.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>InvoiceFlow Pro – Free. Forever. Supported.</p>
+      <p style="margin-top:1rem;">
+        <a href="index.html">Home</a> • 
+        <a href="features.html">Features</a> • 
+        <a href="setup.html">Setup</a> • 
+        <a href="about.html">About</a> • 
+        <a href="contact.html">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

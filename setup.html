@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Install InvoiceFlow Pro in 60 seconds. Free Google Apps Script for auto email, WhatsApp, PDF invoices in Google Sheets. No coding needed.">
+  <meta name="keywords" content="google apps script invoice automation, how to auto email invoice google sheets, free invoice script google sheets, install invoice tool google sheets">
+  <title>Install InvoiceFlow Pro – Google Apps Script Setup Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --success: #34a853;
+      --danger: #d93025;
+      --light: #f8fafc;
+      --dark: #0f172a;
+      --gray: #475569;
+      --border: #e2e8f0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      background: white;
+    }
+    .container { width: 90%; max-width: 900px; margin: 0 auto; }
+
+    /* Responsive Navigation */
+    .nav-container {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.4rem;
+      text-decoration: none;
+    }
+    .nav-toggle-checkbox {
+      display: none;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--primary);
+      margin: 3px 0;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    /* Mobile Menu */
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        gap: 1.25rem;
+        display: none;
+      }
+      .nav-toggle-checkbox:checked ~ .nav-links {
+        display: flex;
+      }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e6f4ff 100%);
+    }
+    .hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: var(--gray);
+    }
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 0.5rem;
+    }
+    .btn:hover { background: var(--primary-dark); }
+    section {
+      padding: 3.5rem 0;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--primary);
+    }
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      color: var(--dark);
+    }
+    .code-block {
+      background: #f1f5f9;
+      padding: 1.25rem;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border: 1px solid var(--border);
+    }
+    .trust-badge {
+      background: #f0fdf4;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--success);
+    }
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background: var(--dark);
+      color: white;
+      font-size: 0.95rem;
+    }
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero p { font-size: 1.05rem; }
+      .card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Responsive Navigation -->
+  <nav class="nav-container" aria-label="Main navigation">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">InvoiceFlow Pro</a>
+      
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="setup.html" class="active">Setup</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Install InvoiceFlow Pro in 60 Seconds</h1>
+      <p>Copy, paste, and authorize. No coding skills needed. <strong>100% free. Lifetime access.</strong></p>
+      <a href="features.html" class="btn">See Features</a>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+  </section>
+
+  <!-- STEP 1 -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>Step 1: Open Google Apps Script</h2>
+      </div>
+      <div class="card">
+        <h3>In Your Google Sheet</h3>
+        <ol style="padding-left: 1.5rem;">
+          <li>Open your invoice Google Sheet (with tabs like <code>E.com</code>, <code>SWE</code>, <code>Klastor</code>)</li>
+          <li>Click <strong>Extensions → Apps Script</strong></li>
+          <li>A new tab opens with a default script</li>
+        </ol>
+        <p><strong>Tip</strong>: Keep your sheet open — you’ll return to it after setup.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section style="background:#f8fafc;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Step 2: Paste the Full Code</h2>
+      </div>
+      <div class="card">
+        <h3>Replace Default Code</h3>
+        <p>Delete everything in the script editor. Paste the full InvoiceFlow Pro code below:</p>
+        <div class="code-block">
+// Full InvoiceFlow Pro code goes here<br>
+// (Copy from GitHub Gist or official source)<br>
+// ~1000 lines of powerful automation
+        </div>
+        <p>Click the floppy disk icon 💾 to <strong>Save</strong>. Name your project: <strong>InvoiceFlow Pro</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>Step 3: Authorize Permissions</h2>
+      </div>
+      <div class="card">
+        <h3>Grant Safe Access to Your Files</h3>
+        <p>Click the ▶️ (run) button next to <code>onOpen</code>.</p>
+        <p>Google will show a permissions screen. Click <strong>“Allow”</strong> or <strong>“Advanced → Go to InvoiceFlow Pro”</strong>.</p>
+        <div class="trust-badge">
+          🔒 <strong>Your data is safe</strong>: This script only accesses:
+          <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+            <li>Your invoice sheet</li>
+            <li>Your specified master log sheet</li>
+            <li>Your Google Drive (to save PDFs)</li>
+          </ul>
+          No data is sent to external servers.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section style="background:#f0fdf4;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Step 4: Configure Settings</h2>
+      </div>
+      <div class="card">
+        <h3>Set Up Your Master Log & Business Rules</h3>
+        <p>Go back to your Google Sheet and <strong>refresh the page</strong>.</p>
+        <p>You’ll see a new menu: <strong>Invoice Tools → Settings</strong>.</p>
+        <p>In Settings, enter:</p>
+        <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+          <li><strong>Master Sheet URL</strong>: Link to your log spreadsheet</li>
+          <li><strong>Record Sheet Name</strong>: e.g., <code>2024_Invoices</code></li>
+          <li><strong>Toggle features per business</strong>: Email, WhatsApp, Reminders, Auto-Download</li>
+        </ul>
+        <p>Click <strong>“Save Settings”</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 5 -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>Step 5: Generate Your First Invoice</h2>
+      </div>
+      <div class="card">
+        <h3>One Click. Full Automation.</h3>
+        <ol style="padding-left: 1.5rem;">
+          <li>Fill out your invoice sheet (e.g., <code>E.com</code> tab)</li>
+          <li>Go to <strong>Invoice Tools → E.com with Umair</strong></li>
+          <li>Click. Wait 5 seconds.</li>
+        </ol>
+        <p>✅ Email sent<br>
+        ✅ WhatsApp link ready<br>
+        ✅ PDF saved in Drive<br>
+        ✅ Log updated in your master sheet</p>
+        <p><em>Target keyword: google apps script invoice automation</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA STORAGE -->
+  <section style="background:#fef2f2;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Where Your Data Lives</h2>
+      </div>
+      <div class="card">
+        <h3>100% in Your Control</h3>
+        <ul style="padding-left: 1.5rem;">
+          <li><strong>PDFs</strong>: Saved in your Google Drive → <code>Eco with Omar Invoices / [CODE] / [Month Year]</code></li>
+          <li><strong>Logs</strong>: Only in the sheet <strong>you specify</strong> — no extra tabs</li>
+          <li><strong>Settings</strong>: Stored privately in script properties (only you can access)</li>
+        </ul>
+        <p><strong>No external servers. No data sharing. Ever.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Stuck? <a href="contact.html">Contact us</a> — we reply fast.</p>
+      <p style="margin-top:1rem;">
+        <a href="index.html">Home</a> • 
+        <a href="features.html">Features</a> • 
+        <a href="setup.html">Setup</a> • 
+        <a href="about.html">About</a> • 
+        <a href="contact.html">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

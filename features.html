@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Run 3+ businesses from one Google Sheet. Send email + WhatsApp invoices, auto-generate PDFs, log everything — all for free. No subscription.">
+  <meta name="keywords" content="multi business invoice template google sheets, send invoice via whatsapp google sheets, auto generate pdf invoice google sheets, google sheets master invoice log, auto invoice reminder google sheets">
+  <title>Multi-Business Invoicing in Google Sheets | InvoiceFlow Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --success: #34a853;
+      --danger: #d93025;
+      --light: #f8fafc;
+      --dark: #0f172a;
+      --gray: #475569;
+      --border: #e2e8f0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      background: white;
+    }
+    .container { width: 90%; max-width: 1000px; margin: 0 auto; }
+
+    /* Responsive Navigation */
+    .nav-container {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.4rem;
+      text-decoration: none;
+    }
+    .nav-toggle-checkbox {
+      display: none;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--primary);
+      margin: 3px 0;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    /* Mobile Menu */
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        gap: 1.25rem;
+        display: none;
+      }
+      .nav-toggle-checkbox:checked ~ .nav-links {
+        display: flex;
+      }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e6f4ff 100%);
+    }
+    .hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: var(--gray);
+    }
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 0.5rem;
+    }
+    .btn:hover { background: var(--primary-dark); }
+    section {
+      padding: 3.5rem 0;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .section-header h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--primary);
+    }
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      color: var(--dark);
+    }
+    .whatsapp-bubble {
+      background: #dcf8c6;
+      padding: 1rem;
+      border-radius: 18px;
+      max-width: 85%;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+    .pdf-invoice {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 1.5rem 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .log-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .log-table th {
+      background: #f1f5f9;
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    .log-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+    }
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background: var(--dark);
+      color: white;
+      font-size: 0.95rem;
+    }
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1.05rem; }
+      .card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Responsive Navigation -->
+  <nav class="nav-container" aria-label="Main navigation">
+    <div class="nav-content">
+      <a href="index.html" class="nav-logo">InvoiceFlow Pro</a>
+      
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+      <label for="nav-toggle" class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html" class="active">Features</a></li>
+        <li><a href="setup.html">Setup</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Multi-Business Invoicing in Google Sheets</h1>
+      <p>Run E.com with Umair, SW E-Commerce LLC, and Klastor LLC — all from one sheet. Each with its own branding, settings, and workflow. <strong>100% free. No subscription.</strong></p>
+      <a href="setup.html" class="btn">Install Now</a>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+  </section>
+
+  <!-- MULTI-BUSINESS -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>🏢 One Sheet. Three Businesses. Total Control.</h2>
+      </div>
+      <div class="card">
+        <h3>Independent Templates, Unified Interface</h3>
+        <p>Manage multiple businesses without switching tools:</p>
+        <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+          <li><strong>E.com with Umair</strong> – e-commerce clients</li>
+          <li><strong>SW E-Commerce LLC</strong> – agency billing</li>
+          <li><strong>Klastor LLC</strong> – B2B consulting</li>
+        </ul>
+        <p>Each has its own invoice sheet, but you control them all from one menu. Toggle email, WhatsApp, reminders, and auto-download <strong>per business</strong> in Settings.</p>
+        <p><em>Target keyword: multi business invoice template google sheets</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHATSAPP -->
+  <section style="background:#f8fafc;">
+    <div class="container">
+      <div class="section-header">
+        <h2>💬 Send Invoices via WhatsApp – Free & Secure</h2>
+      </div>
+      <div class="card">
+        <h3>Pre-Filled Messages with End-to-End Encryption</h3>
+        <p>Leverage WhatsApp’s <strong>end-to-end encryption</strong> and <strong>free global messaging</strong> to reach clients where they are.</p>
+        <div class="whatsapp-bubble">
+          Hello TechStart LLC,<br><br>
+          Your invoice 042_ECM_SEP is ready.<br>
+          Amount: AED 1,250.00<br>
+          View: https://drive.google.com/...<br><br>
+          Thank you!<br>
+          Accounts Team<br>
+          E.com with Umair
+        </div>
+        <p><strong>✅ Uses official wa.me links</strong><br>
+        <strong>✅ No API, no cost, no limits</strong><br>
+        <strong>✅ Phone read from B10:C10</strong></p>
+        <p><em>Target keyword: send invoice via whatsapp google sheets</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PDF -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>📄 Auto-Generated PDF Invoices – Zero Cost</h2>
+      </div>
+      <div class="card">
+        <h3>Perfectly Formatted, Saved in Your Drive</h3>
+        <div class="pdf-invoice">
+          <div style="text-align:center; margin-bottom:1.5rem;">
+            <h3 style="font-size:1.4rem; margin:0;">SW E-Commerce LLC</h3>
+            <p style="color:#666;">Invoice #043_SWE_SEP</p>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem;">
+            <div>
+              <p><strong>Billed To:</strong><br>Global Retail Inc.</p>
+              <p><strong>Project:</strong><br>Store Setup</p>
+            </div>
+            <div style="text-align:right;">
+              <p><strong>Issue Date:</strong> 06-Sep-2024</p>
+              <p><strong>Due Date:</strong> 09-Sep-2024</p>
+            </div>
+          </div>
+          <hr style="border:0; border-top:1px dashed #ccc; margin:1.5rem 0;">
+          <div style="text-align:right; font-weight:bold; color:var(--danger);">
+            Grand Total: USD 2,500.00
+          </div>
+        </div>
+        <p><strong>✅ Saved in Drive: Eco with Omar Invoices / SWE / September 2024</strong><br>
+        <strong>✅ Overwrites old versions automatically</strong></p>
+        <p><em>Target keyword: auto generate pdf invoice google sheets</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOG -->
+  <section style="background:#f0fdf4;">
+    <div class="container">
+      <div class="section-header">
+        <h2>📊 Unified Master Invoice Log</h2>
+      </div>
+      <div class="card">
+        <h3>One Sheet. Full Visibility.</h3>
+        <p>All invoices from all businesses flow into your master sheet — no guesswork, no silos.</p>
+        <table class="log-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Email Status</th>
+              <th>WhatsApp</th>
+              <th>Invoice Ref</th>
+              <th>Grand Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>05-Sep-24 10:30</td>
+              <td>Sent</td>
+              <td><a href="#" style="color:var(--primary); text-decoration:underline;">💬 WhatsApp</a></td>
+              <td>042_ECM_SEP</td>
+              <td>AED 1,250.00</td>
+            </tr>
+            <tr>
+              <td>04-Sep-24 14:15</td>
+              <td>Sent</td>
+              <td><a href="#" style="color:var(--primary); text-decoration:underline;">💬 WhatsApp</a></td>
+              <td>043_SWE_SEP</td>
+              <td>USD 2,500.00</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>✅ Auto-created if missing</strong><br>
+        <strong>✅ Only your sheet — no extra tabs</strong></p>
+        <p><em>Target keyword: google sheets master invoice log</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REMINDERS -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2>⏰ Auto Reminders – Stop Chasing Payments</h2>
+      </div>
+      <div class="card">
+        <h3>Follow Up Automatically When Clients Go Silent</h3>
+        <p>Enable reminders in Settings. The system auto-sends a “Past Due” email X days after the due date — no action needed.</p>
+        <p><strong>✅ Custom delay (1–90 days)</strong><br>
+        <strong>✅ Professional HTML reminder</strong><br>
+        <strong>✅ Logs reminder status</strong></p>
+        <p><em>Target keyword: auto invoice reminder google sheets</em></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>InvoiceFlow Pro – Free, unlimited invoicing for multi-business owners.</p>
+      <p style="margin-top:1rem;">
+        <a href="index.html">Home</a> • 
+        <a href="features.html">Features</a> • 
+        <a href="setup.html">Setup</a> • 
+        <a href="about.html">About</a> • 
+        <a href="contact.html">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
